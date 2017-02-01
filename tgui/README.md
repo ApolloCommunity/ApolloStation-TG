@@ -3,6 +3,7 @@
 - [tgui](#tgui)
 	- [Concepts](#concepts)
 	- [Using It](#using-it)
+	- [Available icons](#icons)
 	- [Copypasta](#copypasta)
 
 <!-- /TOC -->
@@ -97,6 +98,10 @@ In a template there are a few special values. `config` is always the same and is
 ```
 
 Templates can be very confusing at first, as ternary operators, computed properties, and iterators are used quite a bit in more complex interfaces. Start with the basics, and work your way up. Much of the complexity stems from performance concerns. If in doubt, take the simpler approach and refactor if performance becomes an issue.
+
+## Icons
+
+All icons that can be used with tgui can be found at http://fontawesome.io/icons/
 
 ## Copypasta
 We all do it, even the best of us. If you just want to make a tgui **fast**, here's what you need (note that you'll probably be forced to clean your shit up upon code review):
