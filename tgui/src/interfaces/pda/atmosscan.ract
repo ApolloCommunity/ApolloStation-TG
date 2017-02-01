@@ -1,0 +1,24 @@
+<link rel='ractive' href='./back.ract'>
+
+<ui-section>
+	<ui-button icon='refresh' action='refresh'>Refresh</ui-button>
+	<back/>
+</ui-section>
+
+<h4>Atmospheric Readings</h4>
+<hr>
+<ui-display>
+	<ui-section>
+		{{#if data.atmos.pressure}}
+			Air pressure: {{data.atmos.pressure}}kPa
+			<br/><br/>
+		{{/if}}
+		{{#each data.atmos.gases}}
+			{{name}}: {{percent}}%
+			<br/><br/>
+		{{/each}}
+		{{#if data.atmos.temp}}
+			Temperature: {{data.atmos.temp}}&deg;C
+		{{/if}}
+	</ui-section>
+</ui-display>

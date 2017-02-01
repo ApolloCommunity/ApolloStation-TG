@@ -1,0 +1,143 @@
+<link rel='ractive' href='./pda/notekeeper.ract'>
+<link rel='ractive' href='./pda/messenger.ract'>
+<link rel='ractive' href='./pda/messages.ract'>
+<link rel='ractive' href='./pda/atmosscan.ract'>
+<!--
+<link rel='ractive' href='./pda/manifest.ract'>
+<link rel='ractive' href='./pda/statusdisplay.ract'>
+<link rel='ractive' href='./pda/powermonitor.ract'>
+<link rel='ractive' href='./pda/medicalrecords.ract'>
+<link rel='ractive' href='./pda/securityrecords.ract'>
+<link rel='ractive' href='./pda/supplyrecords.ract'>
+<link rel='ractive' href='./pda/bots.ract'>
+<link rel='ractive' href='./pda/custodial.ract'>
+<link rel='ractive' href='./pda/signaler.ract'>
+<link rel='ractive' href='./pda/newscaster.ract'>
+<link rel='ractive' href='./pda/dronephone.ract'>
+<link rel='ractive' href='./pda/paiconfig.ract'>
+-->
+
+we're at {{config.screen}} now
+{{#if config.screen == "home"}}
+	<ui-section>
+		<ui-button icon='refresh' action='refresh'>Refresh</ui-button>
+	</ui-section>
+	<hr>
+	<h1>Personal Data Assistant v1.3</h1>
+	<ui-section>
+		{{data.time}}	{{data.date}}
+	</ui-section>
+
+	<ui-section>
+		Cartridge: <ui-button icon='eject' action='eject_cartridge' state='{{data.cartridge ? null : "disabled"}}'>{{data.cartridge ? data.cartridge.name : "None"}}</ui-button>
+	</ui-section>
+	<br/>
+	<ui-display>
+		<ui-section>
+			Owner: {{data.owner}}, {{data.owner_job}}
+			<br/><br/>
+			ID: <ui-button icon='eject' action='eject_id' state='{{data.id ? null : "disabled"}}'>
+					{{#if data.id}}
+						{{data.id.name}}, {{data.id.assignment}}
+					{{else}}
+						None
+					{{/if}}
+				</ui-button>
+		</ui-section>
+	</ui-display>
+
+	<ui-display title='General Functions'>
+		<ui-section>
+			<ul>
+				<li><ui-button icon='sticky-note-o' action='tgui:view' params='{"screen": "notekeeper"}'>Notekeeper</ui-button></li>
+				<li><ui-button icon='comments-o' action='tgui:view' params='{"screen": "messenger"}'>Messenger</ui-button></li>
+				{{#if data.cartridge.access_manifest == 1}}
+					<li><ui-button icon='list' action='tgui:view' params='{"screen": "manifest"}'>View Crew Manifest</ui-button></li>
+				{{/if}}
+			</ul>
+		</ui-section>
+	</ui-display>
+
+	{{#if data.cartridge.access_status_display == 1 || data.cartridge.access_newscaster == 1 || data.cartridge.access_engine == 1 ||
+	data.cartridge.access_medical == 1 || data.cartridge.access_security == 1 || data.cartridge.access_quartermaster == 1}}
+		<ui-display title='Cartridge Functions'>
+			<ui-section>
+				<ul>
+					{{#if data.cartridge.access_status_display == 1}}
+						<li><ui-button icon='television' action='tgui:view' params='{"screen": "statusdisplay"}'>Status Display</ui-button></li>
+					{{/if}}
+					{{#if data.cartridge.access_newscaster == 1}}
+						<li><ui-button icon='newspaper-o' action='tgui:view' params='{"screen": "newscaster"}'>Newscaster Access</ui-button></li>
+					{{/if}}
+					{{#if data.cartridge.access_engine == 1}}
+						<li><ui-button icon='plug' action='tgui:view' params='{"screen": "powermonitor"}'>Power Monitor</ui-button></li>
+					{{/if}}
+					{{#if data.cartridge.access_medical == 1}}
+						<li><ui-button icon='file-text-o' action='tgui:view' params='{"screen": "medicalrecords"}'>Medical Records</ui-button></li>
+					{{/if}}
+					{{#if data.cartridge.access_security == 1}}
+						<li><ui-button icon='file-text-o' action='tgui:view' params='{"screen": "securityrecords"}'>Security Records</ui-button></li>
+					{{/if}}
+					{{#if data.cartridge.access_quartermaster == 1}}
+						<li><ui-button icon='file-text-o' action='tgui:view' params='{"screen": "supplyrecords"}'>Supply Records</ui-button></li>
+					{{/if}}
+				</ul>
+			</ui-section>
+		</ui-display>
+	{{/if}}
+
+	<ui-display title='Utilities'>
+		<ui-section>
+			<ul>
+				<li><ui-button icon='lightbulb-o' style='{{data.flashlight_on ? "selected" : null}}' action='flashlight'>{{data.flashlight_on ? "Disable" : "Enable"}} Flashlight</ui-button></li>
+				{{#if data.cartridge.access_clown == 1}}
+					<li><ui-button icon='volume-up' action='honk'>Honk Synthesizer</ui-button></li>
+					<li><ui-button icon='volume-up' action='sad_trombone'>Sad Trombone</ui-button></li>
+				{{/if}}
+				{{#if data.bot_access_flags != 0}}
+					<li><ui-button icon='wifi' action='tgui:view' params='{"screen": "bots"}'>Bot Access</ui-button></li>
+				{{/if}}
+				{{#if data.cartridge.access_janitor == 1}}
+					<li><ui-button icon='compass' action='tgui:view' params='{"screen": "custodial"}'>Custodial Locator</ui-button></li>
+				{{/if}}
+				{{#if data.signaler_system == 1}}
+					<li><ui-button icon='wifi' action='tgui:view' params='{"screen": "signaler"}'>Signaler System</ui-button></li>
+				{{/if}}
+				{{#if data.cartridge.access_remote_door == 1}}
+					<li><ui-button icon='wifi' action='toggle_remote_door'>Toggle Remote Door</ui-button></li>
+				{{/if}}
+				{{#if data.cartridge.access_remote_door == 1}}
+					<li><ui-button icon='phone' action='tgui:view' params='{"screen": "dronephone"}'>Drone Phone</ui-button></li>
+				{{/if}}
+			</ul>
+		</ui-section>
+	</ui-display>
+
+	<ui-display title='Scanners'>
+		<ui-section>
+			<ul>
+				<li><ui-button icon='cloud' action='tgui:view' params='{"screen": "atmosscan"}'>Atmospheric Scan</ui-button></li>
+				{{#if data.cartridge.access_medical == 1}}
+					<li><ui-button icon='wifi' style='{{data.scanmode == 1 ? "selected" : null}}' action='medical_scanner'>{{(data.scanmode == 1) ? "Disable" : "Enable"}} Medical Scanner</ui-button></li>
+				{{/if}}
+				{{#if data.cartridge.access_reagent_scanner == 1}}
+					<li><ui-button icon='flask' style='{{data.scanmode == 3 ? "selected" : null}}' action='reagent_scanner'>{{(data.scanmode == 3) ? "Disable" : "Enable"}} Reagent Scanner</ui-button></li>
+				{{/if}}
+				{{#if data.cartridge.access_engine == 1}}
+					<li><ui-button icon='exclamation-circle' style='{{data.scanmode == 4 ? "selected" : null}}' action='halogen_counter'>{{(data.scanmode == 4) ? "Disable" : "Enable"}} Halogen Counter</ui-button></li>
+				{{/if}}
+				{{#if data.cartridge.access_atmos == 1}}
+					<li><ui-button icon='cloud' style='{{data.scanmode == 5 ? "selected" : null}}' action='gas_scanner'>{{(data.scanmode == 5) ? "Disable" : "Enable"}} Gas Scanner</ui-button></li>
+				{{/if}}
+			</ul>
+		</ui-section>
+	</ui-display>
+{{elseif config.screen == "notekeeper"}}
+	<notekeeper/>
+{{elseif config.screen == "messenger"}}
+	<messenger/>
+{{elseif config.screen == "messages"}}
+	<messages/>
+{{elseif config.screen == "atmosscan"}}
+	<atmosscan/>
+{{/if}}

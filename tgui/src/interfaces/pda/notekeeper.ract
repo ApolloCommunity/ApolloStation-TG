@@ -1,0 +1,19 @@
+<link rel='ractive' href='./back.ract'>
+
+<ui-section>
+	<ui-button icon='refresh' action='refresh'>Refresh</ui-button>
+	<back/>
+</ui-section>
+
+<h1>Notekeeper v2.3</h1>
+<hr>
+<ui-section>
+	<ui-button icon='pencil' action='edit_notes'>Edit</ui-button>
+</ui-section>
+{{#if data.notescanned}}
+	(This is a scanned image, editing it may cause some text formatting to change.)
+	<br/>
+{{/if}}
+<ui-display>
+	{{data.notehtml}}
+</ui-display>

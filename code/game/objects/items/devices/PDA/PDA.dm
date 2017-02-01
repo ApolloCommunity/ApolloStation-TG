@@ -120,7 +120,168 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		return attack_self(M)
 	return
 
+/obj/item/device/pda/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, \
+									datum/tgui/master_ui = null, datum/ui_state/state = notcontained_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "pda", name, 400, 450, master_ui, state)
+		ui.open()
+
+/obj/item/device/pda/ui_data(mob/user)
+	var/data = list(
+		"mode" = mode,
+		"owner" = owner,
+		"owner_job" = ownjob,
+		"time" = worldtime2text(),
+		"date" = "[time2text(world.realtime, "MMM DD")] [year_integer+540]"
+	)
+
+	if(id)
+		data["id"] = list(
+			"name" = id.registered_name,
+			"assignment" = id.assignment
+		)
+
+	if(cartridge)
+		data["cartridge"] = list(
+			"name" = cartridge.name,
+			"access_clown" = cartridge.access_clown,
+			"access_manifest" = cartridge.access_manifest,
+			"access_status_display" = cartridge.access_status_display,
+			"access_engine" = cartridge.access_engine,
+			"access_medical" = cartridge.access_medical,
+			"access_security" = cartridge.access_security,
+			"access_quartermaster" = cartridge.access_quartermaster,
+			"bot_access_flags" = cartridge.bot_access_flags,
+			"access_janitor" = cartridge.access_janitor,
+			"signaler_system" = istype(cartridge.radio, /obj/item/radio/integrated/signal),
+			"access_newscaster" = cartridge.access_newscaster,
+			"access_reagent_scanner" = cartridge.access_reagent_scanner,
+			"access_atmos" = cartridge.access_atmos,
+			"access_remote_door" = cartridge.access_remote_door,
+			"access_dronephone" = cartridge.access_dronephone,
+			"flashlight_on" = fon,
+			"scanmode" = scanmode
+		)
+
+		if(istype(cartridge, /obj/item/weapon/cartridge/syndicate))
+			var/obj/item/weapon/cartridge/syndicate/S = cartridge
+			data["cartridge"]["shock_charges"] = S.shock_charges
+		if(istype(cartridge, /obj/item/weapon/cartridge/clown))
+			var/obj/item/weapon/cartridge/clown/C = cartridge
+			data["cartridge"]["honk_charges"] = C.honk_charges
+		if(istype(cartridge, /obj/item/weapon/cartridge/mime))
+			var/obj/item/weapon/cartridge/mime/M = cartridge
+			data["cartridge"]["mime_charges"] = M.mime_charges
+
+	// Notekeeper data
+	data["notehtml"] = (notehtml ? notehtml : note)
+	data["notescanned"] = notescanned
+
+	// Messenger data
+	data["messenger_silent"] = silent
+	data["messenger_off"] = toff
+	data["messages"] = tnote
+
+	data["messenger_pdas"] = list()
+	for(var/X in sortNames(get_viewable_pdas()))
+		var/obj/item/device/pda/P = X
+		if(P == src)
+			continue
+		data["messenger_pdas"] += list(list("name" = P.name, "ref" = "\ref[P]"))
+
+	// Atmospheric scan data
+	data["atmos"] = list()
+
+	var/turf/T = user.loc
+	if(!isnull(T))
+		var/datum/gas_mixture/environment = T.return_air()
+		var/list/env_gases = environment.gases
+
+		var/pressure = environment.return_pressure()
+		var/total_moles = environment.total_moles()
+
+		data["atmos"]["pressure"] = round(pressure,0.1)
+
+		if (total_moles)
+			data["atmos"]["gases"] = list()
+			for(var/id in env_gases)
+				var/gas_level = env_gases[id][MOLES]/total_moles
+				if(gas_level > 0)
+					data["atmos"]["gases"] += list(list("name" = env_gases[id][GAS_META][META_GAS_NAME], "percent" = round(gas_level*100, 0.01)))
+
+		data["atmos"]["temp"] = round(environment.temperature-T0C)
+
+	return data
+
+/obj/item/device/pda/ui_act(action, params)
+	if(..())
+		return
+
+	var/mob/living/U = usr
+
+	add_fingerprint(U)
+	U.set_machine(src)
+
+	switch(action)
+		if("eject_cartridge")
+			if (!isnull(cartridge))
+				U.put_in_hands(cartridge)
+				U << "<span class='notice'>You remove [cartridge] from [src].</span>"
+				scanmode = 0
+				if (cartridge.radio)
+					cartridge.radio.hostpda = null
+				cartridge = null
+				update_icon()
+		if("eject_id")
+			id_check(U)
+		if("flashlight")
+			if(fon)
+				fon = 0
+				if(src in U.contents)
+					U.AddLuminosity(-f_lum)
+				else
+					SetLuminosity(0)
+			else
+				fon = 1
+				if(src in U.contents)
+					U.AddLuminosity(f_lum)
+				else
+					SetLuminosity(f_lum)
+			update_icon()
+		if("honk")
+			if(!(last_noise && world.time < last_noise + 20))
+				playsound(loc, 'sound/items/bikehorn.ogg', 50, 1)
+				last_noise = world.time
+		if("sad_trombone")
+			if(!(last_noise && world.time < last_noise + 20))
+				playsound(loc, 'sound/misc/sadtrombone.ogg', 50, 1)
+				last_noise = world.time
+		if("medical_scanner")
+			if(scanmode == 1)
+				scanmode = 0
+			else if((!isnull(cartridge)) && (cartridge.access_medical))
+				scanmode = 1
+		if("reagent_scanner")
+			if(scanmode == 3)
+				scanmode = 0
+			else if((!isnull(cartridge)) && (cartridge.access_reagent_scanner))
+				scanmode = 3
+		if("halogen_counter")
+			if(scanmode == 4)
+				scanmode = 0
+			else if((!isnull(cartridge)) && (cartridge.access_engine))
+				scanmode = 4
+		if("gas_scanner")
+			if(scanmode == 5)
+				scanmode = 0
+			else if((!isnull(cartridge)) && (cartridge.access_atmos))
+				scanmode = 5
+
 /obj/item/device/pda/attack_self(mob/user)
+	ui_interact(user)
+	return
+
 	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/pda)
 	assets.send(user)
 

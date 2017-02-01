@@ -1,0 +1,57 @@
+<link rel='ractive' href='./back.ract'>
+
+<ui-section>
+	<ui-button icon='refresh' action='refresh'>Refresh</ui-button>
+	<back/>
+</ui-section>
+
+<h1>SpaceMessenger v4.0.1</h1>
+<hr>
+<ui-display>
+	<ui-section>
+		{{#if data.mode == 21}}
+			<ui-button icon='arrow-left' action='return_messenger'>Return</ui-button>
+			<ui-button icon='trash' action='view_messages'>Clear Messages</ui-button>
+		{{else}}
+			<ui-button icon='bell-o' action='toggle_ringer'>Ringer: {{data.messenger_silent ? "On" : "Off"}}</ui-button>
+			<br/>
+			<ui-button icon='envelope-o' action='toggle_messenger'>Send/Receive: {{data.messenger_off ? "Off" : "On"}}</ui-button>
+			<br/>
+			<ui-button icon='bell-o' action='set_ringer'>Set Ringtone</ui-button>
+			<br/>
+			<ui-button icon='envelope-o' action='tgui:view' params='{"screen": "messages"}'>Messages</ui-button>
+			
+			{{#if data.cartridge.shock_charges}}
+				<br/><br/><b>{{data.shock_charges}} viral files left</b>
+			{{/if}}
+			{{#if data.cartridge.honk_charges}}
+				<br/><br/><b>{{data.honk_charges}} viral files left</b>
+			{{/if}}
+			{{#if data.cartridge.mime_charges}}
+				<br/><br/><b>{{data.mime_charges}} viral files left</b>
+			{{/if}}
+		{{/if}}
+	</ui-section>
+</ui-display>
+
+<h4>Detected PDAs</h4>
+{{#if !data.messenger_off}}
+	<ui-section>
+		{{#each adata.messenger_pdas}}
+			<ui-button icon='envelope-o' action='send_message' params='{"ref": "{{ref}}"}'>{{name}}</ui-button>
+			{{#if data.cartridge.shock_charges}}
+				 <ui-button icon='bomb' action='explode_pda' params='{"ref": "{{ref}}"}'>Detonate</ui-button>
+			{{/if}}
+			{{#if data.cartridge.honk_charges}}
+				 <ui-button icon='music' action='honk_pda' params='{"ref": "{{ref}}"}'>Send Virus</ui-button>
+			{{/if}}
+			{{#if data.cartridge.mime_charges}}
+				 <ui-button icon='microphone-slash' action='mute_pda' params='{"ref": "{{ref}}"}'>Send Virus</ui-button>
+			{{/if}}
+		{{else}}
+			No PDAs detected
+		{{/each}}
+		<br/><br/>
+		<ui-button icon='envelope-o' action='message_all'>Message All</ui-button>
+	</ui-section>
+{{/if}}
