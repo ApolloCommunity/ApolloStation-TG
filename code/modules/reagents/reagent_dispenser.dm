@@ -172,3 +172,24 @@
 	icon_state = "virus_food"
 	anchored = 1
 	reagent_id = "virusfood"
+
+/obj/structure/reagent_dispensers/unstablemutagen
+	name = "unstable mutagen dispenser"
+	desc = "A dispenser of medium-potency virus mutagenic."
+	icon_state = "unstable_mutagen"
+	anchored = 1
+	reagent_id = "mutagen"
+
+/obj/structure/reagent_dispensers/liquidphoron
+	name = "liquid plasma dispenser"
+	desc = "A dispenser of high-potency virus mutagenic."
+	icon_state = "liquid_phoron"
+	anchored = 1
+	reagent_id = "plasma"
+
+/obj/structure/reagent_dispensers/synaptizine
+	name = "synaptizine dispenser"
+	desc = "A dispenser of viral mutation reverser."
+	icon_state = "synaptizine"
+	anchored = 1
+	reagent_id = "synaptizine"
