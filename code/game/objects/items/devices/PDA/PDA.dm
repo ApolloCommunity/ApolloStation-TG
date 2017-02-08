@@ -1,5 +1,5 @@
 
-//The advanced pea-green monochrome lcd of tomorrow.
+//The advanced variants of blue lcd of tomorrow.
 
 var/global/list/obj/item/device/pda/PDAs = list()
 
@@ -32,6 +32,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/silent = 0 //To beep or not to beep, that is the question
 	var/toff = 0 //If 1, messenger disabled
 	var/tnote = null //Current Texts
+	var/list/datum/data_pda_msg/message_log = null
 	var/last_text //No text spamming
 	var/last_noise //Also no honk spamming that's bad too
 	var/ttone = "beep" //The ringtone!
@@ -128,12 +129,13 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		ui.open()
 
 /obj/item/device/pda/ui_data(mob/user)
-	var/data = list(
-		"mode" = mode,
+	var/list/data = list(
 		"owner" = owner,
 		"owner_job" = ownjob,
 		"time" = worldtime2text(),
-		"date" = "[time2text(world.realtime, "MMM DD")] [year_integer+540]"
+		"date" = "[time2text(world.realtime, "MMM DD")] [year_integer+540]",
+		"flashlight_on" = fon,
+		"scanmode" = scanmode
 	)
 
 	if(id)
@@ -160,8 +162,6 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			"access_atmos" = cartridge.access_atmos,
 			"access_remote_door" = cartridge.access_remote_door,
 			"access_dronephone" = cartridge.access_dronephone,
-			"flashlight_on" = fon,
-			"scanmode" = scanmode
 		)
 
 		if(istype(cartridge, /obj/item/weapon/cartridge/syndicate))
@@ -179,16 +179,38 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	data["notescanned"] = notescanned
 
 	// Messenger data
-	data["messenger_silent"] = silent
-	data["messenger_off"] = toff
-	data["messages"] = tnote
+	data["messenger"] = list(
+		"silent" = silent,
+		"off" = toff
+	)
 
-	data["messenger_pdas"] = list()
+	data["messenger"]["pdas"] = list()
 	for(var/X in sortNames(get_viewable_pdas()))
 		var/obj/item/device/pda/P = X
 		if(P == src)
 			continue
-		data["messenger_pdas"] += list(list("name" = P.name, "ref" = "\ref[P]"))
+		data["messenger"]["pdas"] += list(list("name" = P.name, "ref" = "\ref[P]"))
+
+	data["messenger"]["messages"] = list()
+	if(message_log)
+		for(var/X in message_log)
+			var/datum/data_pda_msg/M = X
+
+			var/conversation_partner = null
+			if(M.recipient == owner)
+				conversation_partner = M.sender
+			else
+				conversation_partner = M.recipient
+			conversation_partner = 
+
+			if(!data["messenger"]["messages"][conversation_partner])
+				data["messenger"]["messages"][conversation_partner] = list()
+
+			data["messenger"]["messages"][conversation_partner] += list("partner" = conversation_partner, "sender" = M.sender, "recipient" = M.recipient, "message" = M.message)
+
+	// todo: data for current convo partner
+	// that'll be used for the conversation template
+	// what needs to be figured out: how to switch config.screen in tgui and also call ui_act in the same move?
 
 	// Atmospheric scan data
 	data["atmos"] = list()
@@ -223,7 +245,10 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	add_fingerprint(U)
 	U.set_machine(src)
 
+	world << action
+
 	switch(action)
+// basic stuff
 		if("eject_cartridge")
 			if (!isnull(cartridge))
 				U.put_in_hands(cartridge)
@@ -249,6 +274,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				else
 					SetLuminosity(f_lum)
 			update_icon()
+
+// honk :)
+
 		if("honk")
 			if(!(last_noise && world.time < last_noise + 20))
 				playsound(loc, 'sound/items/bikehorn.ogg', 50, 1)
@@ -257,6 +285,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			if(!(last_noise && world.time < last_noise + 20))
 				playsound(loc, 'sound/misc/sadtrombone.ogg', 50, 1)
 				last_noise = world.time
+
+// scanners
+
 		if("medical_scanner")
 			if(scanmode == 1)
 				scanmode = 0
@@ -277,6 +308,98 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				scanmode = 0
 			else if((!isnull(cartridge)) && (cartridge.access_atmos))
 				scanmode = 5
+
+// notekeeper
+
+		if("edit_notes")
+			var/n = stripped_multiline_input(U, "Please enter message", name, note)
+			if(!in_range(src, U) || loc != U)
+				return
+
+			if(n)
+				note = n
+				notehtml = parsepencode(n, U, SIGNFONT)
+				notescanned = 0
+
+// messenger
+		if("toggle_ringer")
+			silent = !silent
+
+		if("toggle_messenger")
+			toff = !toff
+
+		if("set_ringer")
+			var/t = input(U, "Please enter new ringtone", name, ttone) as text
+			if(!in_range(src, U) || loc != U)
+				return
+
+			if(t)
+				if(hidden_uplink && (trim(lowertext(t)) == trim(lowertext(lock_code))))
+					hidden_uplink.interact(U)
+					U << "The PDA softly beeps."
+				else
+					t = copytext(sanitize(t), 1, 20)
+					ttone = t
+
+		if("message")
+			var/obj/item/device/pda/P = locate(params["target"])
+			src.create_message(U, P)
+
+		if("message_all")
+			src.send_to_all(U)
+
+		if("clear_messages")
+			//tnote = null
+
+		// syndie detomatix
+		if("explode_pda")
+			var/obj/item/device/pda/P = locate(params["target"])
+			if(isnull(P))
+				U << "PDA not found."
+				return
+			if (!P.toff && cartridge:shock_charges > 0)
+				cartridge:shock_charges--
+
+				var/difficulty = 0
+
+				if(P.cartridge)
+					difficulty += P.cartridge.access_medical
+					difficulty += P.cartridge.access_security
+					difficulty += P.cartridge.access_engine
+					difficulty += P.cartridge.access_clown
+					difficulty += P.cartridge.access_janitor
+					difficulty += P.cartridge.access_manifest * 2
+				else
+					difficulty += 2
+
+				if(prob(difficulty * 15) || (P.hidden_uplink))
+					U.show_message("<span class='danger'>An error flashes on your [src].</span>", 1)
+				else
+					U.show_message("<span class='notice'>Success!</span>", 1)
+					P.explode()
+
+		if("honk_pda")
+			var/obj/item/device/pda/P = locate(params["target"])//Leaving it alone in case it may do something useful, I guess.
+			if(isnull(P))
+				U << "PDA not found."
+				return
+
+			if (!P.toff && cartridge:honk_charges > 0)
+				cartridge:honk_charges--
+				U.show_message("<span class='notice'>Virus sent!</span>", 1)
+				P.honkamt = (rand(15,20))
+
+		if("mute_pda")
+			var/obj/item/device/pda/P = locate(params["target"])
+			if(isnull(P))
+				U << "PDA not found."
+				return
+
+			if (!P.toff && cartridge:mime_charges > 0)
+				cartridge:mime_charges--
+				U.show_message("<span class='notice'>Virus sent!</span>", 1)
+				P.silent = 1
+				P.ttone = "silence"
 
 /obj/item/device/pda/attack_self(mob/user)
 	ui_interact(user)
@@ -438,7 +561,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 				dat += "<h4><img src=pda_mail.png> Messages</h4>"
 
-				dat += tnote
+				//dat += tnote
 				dat += "<br>"
 
 			if (3)
@@ -601,7 +724,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			if("Toggle Ringer")//If viewing texts then erase them, if not then toggle silent status
 				silent = !silent
 			if("Clear")//Clears messages
-				tnote = null
+				//tnote = null
 			if("Ringtone")
 				var/t = input(U, "Please enter new ringtone", name, ttone) as text
 				if(in_range(src, U) && loc == U)
@@ -756,7 +879,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		t = Gibberish(t, 100)
 	return t
 
-/obj/item/device/pda/proc/send_message(mob/living/user = usr,list/obj/item/device/pda/targets)
+/obj/item/device/pda/proc/send_message(mob/living/user = usr, list/obj/item/device/pda/targets)
 	var/message = msg_input(user)
 
 	if(!message || !targets.len)
@@ -767,38 +890,35 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	var/multiple = targets.len > 1
 
-	var/datum/data_pda_msg/last_sucessful_msg
 	for(var/obj/item/device/pda/P in targets)
 		if(P == src)
 			continue
 		var/obj/machinery/message_server/MS = null
 		MS = can_send(P)
-		if(MS)
-			var/datum/data_pda_msg/msg = MS.send_pda_message("[P.owner]","[owner]","[message]",photo)
-			if(msg)
-				last_sucessful_msg = msg
-			if(!multiple)
-				show_to_sender(msg)
-			P.show_recieved_message(msg,src)
-			if(!multiple)
-				show_to_ghosts(user,msg)
-				log_pda("[user] (PDA: [src.name]) sent \"[message]\" to [P.name]")
-		else
-			if(!multiple)
-				user << "<span class='notice'>ERROR: Server isn't responding.</span>"
-				return
+		if(!MS && !multiple)
+			user << "<span class='notice'>ERROR: Server isn't responding.</span>"
+			return
+
+		var/datum/data_pda_msg/msg = MS.send_pda_message("[P.owner]","[owner]","[message]",photo)
+		if(!msg)
+			return
+
+		if(!message_log)
+			message_log = list()
+		message_log += msg
+		P.show_recieved_message(msg,src)
+
+		tnote += "<i><b>&rarr; To [multiple ? "Everyone" : msg.recipient]:</b></i><br>[msg.message][msg.get_photo_ref()]<br>"
+		show_to_ghosts(user, msg, multiple)
+		log_pda("[user] (PDA: [src.name]) sent \"[message]\" to [multiple ? "Everyone" : P.name]")
+
 	photo = null
 
-	if(multiple)
-		show_to_sender(last_sucessful_msg,1)
-		show_to_ghosts(user,last_sucessful_msg,1)
-		log_pda("[user] (PDA: [src.name]) sent \"[message]\" to Everyone")
-
-/obj/item/device/pda/proc/show_to_sender(datum/data_pda_msg/msg,multiple = 0)
-	tnote += "<i><b>&rarr; To [multiple ? "Everyone" : msg.recipient]:</b></i><br>[msg.message][msg.get_photo_ref()]<br>"
-
-/obj/item/device/pda/proc/show_recieved_message(datum/data_pda_msg/msg,obj/item/device/pda/source)
+/obj/item/device/pda/proc/show_recieved_message(datum/data_pda_msg/msg, obj/item/device/pda/source)
 	tnote += "<i><b>&larr; From <a href='byond://?src=\ref[src];choice=Message;target=\ref[source]'>[source.owner]</a> ([source.ownjob]):</b></i><br>[msg.message][msg.get_photo_ref()]<br>"
+	if(!message_log)
+		message_log = list()
+	message_log += msg
 
 	if (!silent)
 		playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)
@@ -817,7 +937,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	update_icon()
 	add_overlay(image(icon, icon_alert))
 
-/obj/item/device/pda/proc/show_to_ghosts(mob/living/user, datum/data_pda_msg/msg,multiple = 0)
+/obj/item/device/pda/proc/show_to_ghosts(mob/living/user, datum/data_pda_msg/msg, multiple = 0)
 	for(var/mob/M in player_list)
 		if(isobserver(M) && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTPDA))
 			var/link = FOLLOW_LINK(M, user)
@@ -830,7 +950,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/obj/machinery/message_server/useMS = null
 	if(message_servers)
 		for (var/obj/machinery/message_server/MS in message_servers)
-		//PDAs are now dependant on the Message Server.
+			//PDAs are now dependant on the Message Server.
 			if(MS.active)
 				useMS = MS
 				break

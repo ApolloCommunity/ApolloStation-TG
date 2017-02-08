@@ -1,8 +1,6 @@
-<link rel='ractive' href='./back.ract'>
-
 <ui-section>
 	<ui-button icon='refresh' action='refresh'>Refresh</ui-button>
-	<back/>
+	<ui-button icon='arrow-left' action='tgui:view' params='{"screen": "messenger"}'>Back</ui-button>
 </ui-section>
 
 <h1>SpaceMessenger v4.0.1</h1>
@@ -11,7 +9,7 @@
 	<ui-section>
 		{{#if data.mode == 21}}
 			<ui-button icon='arrow-left' action='return_messenger'>Return</ui-button>
-			<ui-button icon='trash' action='view_messages'>Clear Messages</ui-button>
+			<ui-button icon='trash' action='clear_messages'>Clear Messages</ui-button>
 		{{else}}
 			<ui-button icon='bell-o' action='toggle_ringer'>Ringer: {{data.messenger_silent ? "On" : "Off"}}</ui-button>
 			<br/>
@@ -36,5 +34,5 @@
 
 <h4>Messages</h4>
 <ui-section>
-	{{data.tnote}}
+	{{data.messenger.messages}}
 </ui-section>

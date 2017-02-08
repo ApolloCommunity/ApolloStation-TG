@@ -407,8 +407,11 @@
 								PDARec = P
 						//Sender isn't faking as someone who exists
 						if(isnull(PDARec))
-							src.linkedServer.send_pda_message("[customrecepient.owner]", "[customsender]","[custommessage]")
+							var/datum/data_pda_msg/msg = src.linkedServer.send_pda_message("[customrecepient.owner]", "[customsender]","[custommessage]")
+							
 							customrecepient.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[customrecepient];choice=Message;target=\ref[src]'>[customsender]</a> ([customjob]):</b></i><br>[custommessage]<br>"
+							customrecepient.message_log += msg
+
 							if (!customrecepient.silent)
 								playsound(customrecepient.loc, 'sound/machines/twobeep.ogg', 50, 1)
 								customrecepient.audible_message("\icon[customrecepient] *[customrecepient.ttone]*", null, 3)
@@ -420,8 +423,11 @@
 								customrecepient.add_overlay(image('icons/obj/pda.dmi', "pda-r"))
 						//Sender is faking as someone who exists
 						else
-							src.linkedServer.send_pda_message("[customrecepient.owner]", "[PDARec.owner]","[custommessage]")
+							var/datum/data_pda_msg/msg = src.linkedServer.send_pda_message("[customrecepient.owner]", "[PDARec.owner]","[custommessage]")
+
 							customrecepient.tnote += "<i><b>&larr; From <a href='byond://?src=\ref[customrecepient];choice=Message;target=\ref[PDARec]'>[PDARec.owner]</a> ([customjob]):</b></i><br>[custommessage]<br>"
+							customrecepient.message_log += msg
+
 							if (!customrecepient.silent)
 								playsound(customrecepient.loc, 'sound/machines/twobeep.ogg', 50, 1)
 								customrecepient.audible_message("\icon[customrecepient] *[customrecepient.ttone]*", null, 3)
