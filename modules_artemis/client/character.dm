@@ -50,7 +50,7 @@ var/list/all_characters = list() // A list of all loaded characters
 	var/religion = "None"               //Religious association.
 
 	// Job vars, these are used in the job selection screen and hiring computer
-	var/datum/department/department
+	var/datum/department/selected_department
 	var/list/roles = list( "Assistant" = "Low" ) // Roles that the player has unlocked
 
 	// Maps each organ to either null(intact), "cyborg" or "amputated"
@@ -129,9 +129,8 @@ var/list/all_characters = list() // A list of all loaded characters
 	new_character = new_char
 	temporary = temp
 
-	if( !department )
-		department = CIVILIAN
-
+	if( !selected_department )
+		selected_department = departments["CIVILIAN"]
 	menu = new( null, "creator", "Character Creator", 710, 610 )
 	menu.window_options = "focus=0;can_close=0;"
 

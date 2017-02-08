@@ -37,6 +37,7 @@
 		if(load_character())
 			return
 	//we couldn't load character data so just randomize the character appearance + name
+	selected_character = selected_character.New()
 	selected_character.random_character()		//let's create a random character then - rather than a fat, bald and naked man.
 	selected_character.real_name = pref_species.random_name(gender,1)
 	if(!loaded_preferences_successfully)
@@ -45,9 +46,13 @@
 	return
 
 /datum/preferences/ShowChoices(mob/user)
-	if(!user || !user.client)
-		world << "return"
+	if(!user || !user.client || !selected_character)
+		if(!selected_character)
+			selected_character = selected_character.New()
 		return
+	world << selected_character
+	world << selected_character.selected_department
+
 	update_preview_icon()
 	user << browse_rsc(preview_icon, "previewicon.png")
 	var/dat = "<center>"
@@ -61,7 +66,6 @@
 	dat += "</center>"
 
 	dat += "<HR>"
-
 	switch(current_tab)
 		if (0) // Character Settings#
 			if(path)
@@ -98,10 +102,11 @@
 			dat += "<a href ='?_src_=prefs;preference=cyborg_name;task=input'><b>Cyborg:</b> [custom_names["cyborg"]]</a><BR>"
 			dat += "<a href ='?_src_=prefs;preference=religion_name;task=input'><b>Chaplain religion:</b> [custom_names["religion"]] </a>"
 			dat += "<a href ='?_src_=prefs;preference=deity_name;task=input'><b>Chaplain deity:</b> [custom_names["deity"]]</a><BR>"
-			//Literally no fucking idea why this if statement doesn't work - Cakey
-			//if(selected_character.department.name == "Security")
-			dat += "<b>Custom job preferences:</b><BR>"
-			dat += "<a href='?_src_=prefs;preference=sec_dept;task=input'><b>Prefered security department:</b> [prefered_security_department]</a><BR></td>"
+
+			if(selected_character.selected_department.department_id == SEC)
+				dat += "<b>Custom job preferences:</b><BR>"
+				dat += "<a href='?_src_=prefs;preference=sec_dept;task=input'><b>Prefered security department:</b> [prefered_security_department]</a><BR></td>"
+
 			dat += "<td valign='center'>"
 
 			dat += "<div class='statusDisplay'><center><img src=previewicon.png width=[preview_icon.Width()] height=[preview_icon.Height()]></center></div>"
@@ -451,7 +456,7 @@
 			if("setJobLevel")
 				UpdateJobPreference(user, href_list["text"], text2num(href_list["level"]))
 			if("setDepartment")
-				selected_character.department = input(user, "Select a department","Department") as anything in departments
+				selected_character.selected_department = input(user, "Select a department","Department") as anything in departments
 			else
 				SetChoices(user)
 		return 1
@@ -960,27 +965,27 @@
 			HTML += "<tr bgcolor='[job.selection_color]'><td width='60%' align='right'>"
 			var/rank = job.title
 			lastJob = job
-			//if((job.department_flag == selected_character.department) || (job.department_flag == CIVILIAN))
-			if(jobban_isbanned(user, rank))
-				HTML += "<font color=red>[rank]</font></td><td><a href='?_src_=prefs;jobbancheck=[rank]'> BANNED</a></td></tr>"
-				continue
-			if(!job.player_old_enough(user.client))
-				var/available_in_days = job.available_in_days(user.client)
-				HTML += "<font color=red>[rank]</font></td><td><font color=red> \[IN [(available_in_days)] DAYS\]</font></td></tr>"
-				continue
-			if((job_civilian_low & ASSISTANT) && (rank != "Assistant") && !jobban_isbanned(user, "Assistant"))
-				HTML += "<font color=orange>[rank]</font></td><td></td></tr>"
-				continue
-			if(config.enforce_human_authority && !user.client.prefs.pref_species.qualifies_for_rank(rank, user.client.prefs.features))
-				if(user.client.prefs.pref_species.id == "human")
-					HTML += "<font color=red>[rank]</font></td><td><font color=red><b> \[MUTANT\]</b></font></td></tr>"
+			if((job.department_flag == selected_character.selected_department) || (job.department_flag == CIVILIAN) || (job.department_flag == SILICON))
+				if(jobban_isbanned(user, rank))
+					HTML += "<font color=red>[rank]</font></td><td><a href='?_src_=prefs;jobbancheck=[rank]'> BANNED</a></td></tr>"
+					continue
+				if(!job.player_old_enough(user.client))
+					var/available_in_days = job.available_in_days(user.client)
+					HTML += "<font color=red>[rank]</font></td><td><font color=red> \[IN [(available_in_days)] DAYS\]</font></td></tr>"
+					continue
+				if((job_civilian_low & ASSISTANT) && (rank != "Assistant") && !jobban_isbanned(user, "Assistant"))
+					HTML += "<font color=orange>[rank]</font></td><td></td></tr>"
+					continue
+				if(config.enforce_human_authority && !user.client.prefs.pref_species.qualifies_for_rank(rank, user.client.prefs.features))
+					if(user.client.prefs.pref_species.id == "human")
+						HTML += "<font color=red>[rank]</font></td><td><font color=red><b> \[MUTANT\]</b></font></td></tr>"
+					else
+						HTML += "<font color=red>[rank]</font></td><td><font color=red><b> \[NON-HUMAN\]</b></font></td></tr>"
+					continue
+				if((rank in command_positions) || (rank == "AI"))//Bold head jobs
+					HTML += "<b><span class='dark'>[rank]</span></b>"
 				else
-					HTML += "<font color=red>[rank]</font></td><td><font color=red><b> \[NON-HUMAN\]</b></font></td></tr>"
-				continue
-			if((rank in command_positions) || (rank == "AI"))//Bold head jobs
-				HTML += "<b><span class='dark'>[rank]</span></b>"
-			else
-				HTML += "<span class='dark'>[rank]</span>"
+					HTML += "<span class='dark'>[rank]</span>"
 
 			HTML += "</td><td width='40%'>"
 
