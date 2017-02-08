@@ -27,11 +27,11 @@
 	var/list/obj/item/stack/sheet/mat_obj = list( 	"Diamonds" = /obj/item/stack/sheet/mineral/diamond,
 													"Steel" = /obj/item/stack/sheet/metal,
 													"Silver" = /obj/item/stack/sheet/mineral/silver,
-													"Platinum" = /obj/item/stack/sheet/mineral/platinum,
-													"Osmium" = /obj/item/stack/sheet/mineral/osmium,
+													"Platinum" = /obj/item/stack/sheet/mineral/adamantine,
+													"Osmium" = /obj/item/stack/sheet/mineral/mythril,
 													"Gold" = /obj/item/stack/sheet/mineral/gold,
 													"Uranium" = /obj/item/stack/sheet/mineral/uranium,
-													"Phoron" = /obj/item/stack/sheet/mineral/phoron,
+													"Phoron" = /obj/item/stack/sheet/mineral/plasma,
 													"Supermatter" = /obj/item/weapon/shard/supermatter ) // cost per each mod # of bars
 
 /obj/machinery/phoron_desublimer/furnace/New()
@@ -41,10 +41,10 @@
 								"Silver" = rand(40, 70), \
 								"Uranium" = rand(80, 110), \
 								"Gold" = rand(120, 150), \
-								"Platinum" = rand(160, 190), \
+								"Adamantine" = rand(160, 190), \
 								"Diamonds" = rand(200, 230), \
 								"Phoron" = rand(240, 270), \
-								"Osmium" = rand(280, 300), \
+								"Mythril" = rand(280, 300), \
 								"Supermatter" = rand(310, 340)) // Setting peak locations
 
 		neutron_flow = rand(1,350)
@@ -87,7 +87,8 @@
 		var/rads = (neutron_flow / 3) * sqrt( 1 / get_dist(l, src) )
 		l.apply_effect(rads, IRRADIATE)
 	sleep(28)
-	playsound(loc, 'sound/effects/laser_sustained.ogg', 75, 1, -1)
+	//TODO: Port sound file.
+	//playsound(loc, 'sound/effects/laser_sustained.ogg', 75, 1, -1)
 	sleep(8)
 	playsound(loc, 'sound/machines/ding.ogg', 50, 1, -1)
 	sleep(10)
@@ -157,7 +158,7 @@
 	return ready
 
 /obj/machinery/phoron_desublimer/furnace/attackby(var/obj/item/weapon/B as obj, var/mob/user as mob)
-	if(isrobot(user))
+	if(istype(user, /mob/living/silicon))
 		return
 	if(istype(B, /obj/item/weapon/shard/supermatter))
 		if( !shard )

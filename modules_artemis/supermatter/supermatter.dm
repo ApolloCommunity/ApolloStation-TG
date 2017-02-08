@@ -501,3 +501,7 @@
 	if((( world.timeofday - start) > delay ) || (( world.timeofday - start ) < 0))
 		return 1
 	return 0
+
+//LINDA! Don't touch the supermatter. ~rj
+/obj/machinery/power/supermatter_shard/supermatter/experience_pressure_difference(pressure_difference, direction, pressure_resistance_prob_delta = 0)
+	return 0

@@ -9,7 +9,7 @@
 	desc = "A shard of supermatter. Incredibly dangerous, though not large enough to go critical."
 	force = 10.0
 	throwforce = 20.0
-	icon = 'icons/obj/supermatter.dmi'
+	icon = 'icons/obj/supermatter_artemis.dmi'
 	icon_state = "supermattersmall"
 	w_class = 2
 	flags = CONDUCT
@@ -80,7 +80,7 @@
 	..()
 
 /obj/item/weapon/shard/supermatter/proc/feed( var/datum/gas_mixture/gas )
-	size += gas.gases["plasma"]
+	size += gas.gases["plasma"][MOLES]
 
 	if( size > max_size )
 		shatter()

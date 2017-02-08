@@ -26,7 +26,7 @@
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
 
 /obj/machinery/phoron_desublimer/vessel/attackby(var/obj/item/weapon/B as obj, var/mob/user as mob)
-	if(isrobot(user))
+	if(istype(user, /mob/living/silicon))
 		return
 	else if(istype(B, /obj/item/weapon/shard/supermatter))
 		if( !loaded_shard )
@@ -51,7 +51,7 @@
 	return
 
 /obj/machinery/phoron_desublimer/vessel/proc/filled()
-	if( air_contents.total_moles > 1 )
+	if( air_contents.total_moles() > 1 )
 		return 1
 	else
 		return 0
@@ -60,11 +60,11 @@
 	if( !loaded_tank )
 		src.visible_message("\icon[src] <b>[src]</b> buzzes, \"No tank loaded!\"")
 		return
-	if( loaded_tank.air_contents.total_moles < 1 )
+	if( loaded_tank.air_contents.total_moles() < 1 )
 		src.visible_message("\icon[src] <b>[src]</b> buzzes, \"Loaded tank is empty!\"")
 		return
 
-	air_contents.merge( loaded_tank.air_contents.remove( loaded_tank.air_contents.total_moles ))
+	air_contents.merge( loaded_tank.air_contents.remove( loaded_tank.air_contents.total_moles() ))
 
 	if( icon_state != "ProcessorFull" )
 		flick("ProcessorFill", src)
@@ -83,7 +83,7 @@
 
 	active = 1
 
-	loaded_shard.feed( air_contents.remove( air_contents.total_moles ))
+	loaded_shard.feed( air_contents.remove( air_contents.total_moles() ))
 
 	flick("ProcessorCrystalize", src)
 	sleep(22)
