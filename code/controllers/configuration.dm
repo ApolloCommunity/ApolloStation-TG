@@ -277,7 +277,7 @@
 		else if(copytext(t, 1, 2) == "#")
 			continue
 
-		warning("[t]"])
+		warning("[t]")
 
 		var/pos = findtext(t, " ")
 		var/name = null
