@@ -15,9 +15,6 @@ var/list/map_transition_config = MAP_TRANSITION_CONFIG
 /world/New()
 	spawn(10)
 		sleep 1
-		world.hub = "Exadv1.spacestation13"
-		world.hub_password = "kMZy3U5jJHSiBQjr"
-		world.name = "Artemis Station"
 		world.visibility = 0
 
 	map_ready = 1
