@@ -271,12 +271,13 @@
 	for(var/t in Lines)
 		if(!t)
 			continue
-
 		t = trim(t)
 		if(length(t) == 0)
 			continue
 		else if(copytext(t, 1, 2) == "#")
 			continue
+
+		warning("[t]"])
 
 		var/pos = findtext(t, " ")
 		var/name = null
