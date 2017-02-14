@@ -35,7 +35,7 @@
 	icon_state = "meatbread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice/meat
 	bonus_reagents = list("nutriment" = 5, "vitamin" = 10)
-	list_reagents = list("nutriment" = 30, "vitamin" = 5)
+	list_reagents = list("nutriment" = 30, "vitamin" = 5, "protein" = 15)
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice/meat
 	name = "meatbread slice"
@@ -48,14 +48,14 @@
 	icon_state = "xenomeatbread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice/xenomeat
 	bonus_reagents = list("nutriment" = 5, "vitamin" = 10)
-	list_reagents = list("nutriment" = 30, "vitamin" = 5)
+	list_reagents = list("nutriment" = 30, "vitamin" = 5, "protein" = 15)
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice/xenomeat
 	name = "xenomeatbread slice"
 	desc = "A slice of delicious meatbread. Extra Heretical."
 	icon_state = "xenobreadslice"
 	filling_color = "#32CD32"
-	list_reagents = list("nutriment" = 6, "vitamin" = 1)
+	list_reagents = list("nutriment" = 6, "vitamin" = 1, "protein" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/store/bread/spidermeat
 	name = "spider meat loaf"
@@ -63,14 +63,14 @@
 	icon_state = "spidermeatbread"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/breadslice/spidermeat
 	bonus_reagents = list("nutriment" = 5, "vitamin" = 10)
-	list_reagents = list("nutriment" = 30, "toxin" = 15, "vitamin" = 5)
+	list_reagents = list("nutriment" = 30, "toxin" = 15, "vitamin" = 5, "protein" = 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice/spidermeat
 	name = "spider meat bread slice"
 	desc = "A slice of meatloaf made from an animal that most likely still wants you dead."
 	icon_state = "xenobreadslice"
 	filling_color = "#7CFC00"
-	list_reagents = list("nutriment" = 6, "toxin" = 3, "vitamin" = 1)
+	list_reagents = list("nutriment" = 6, "toxin" = 3, "vitamin" = 1, "protein" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/store/bread/banana
 	name = "banana-nut bread"

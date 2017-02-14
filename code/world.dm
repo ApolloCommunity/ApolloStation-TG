@@ -69,6 +69,7 @@ var/list/map_transition_config = MAP_TRANSITION_CONFIG
 
 	Master.Setup(10, FALSE)
 
+	toggle_hub()
 
 #define IRC_STATUS_THROTTLE 50
 var/last_irc_status = 0

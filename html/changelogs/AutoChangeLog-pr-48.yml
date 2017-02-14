@@ -1,0 +1,4 @@
+author: "Powergrid sensor port"
+delete-after: True
+changes: 
+  - rscadd: "Powergrid sensors."

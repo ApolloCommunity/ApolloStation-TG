@@ -51,7 +51,7 @@
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/cakeslice/brain
 	slices_num = 5
 	bonus_reagents = list("nutriment" = 5, "mannitol" = 10, "vitamin" = 10)
-	list_reagents = list("nutriment" = 20, "mannitol" = 10, "vitamin" = 5)
+	list_reagents = list("nutriment" = 20, "mannitol" = 10, "vitamin" = 5, "protein" = 10)
 
 
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice/brain
@@ -59,7 +59,7 @@
 	desc = "Lemme tell you something about prions. THEY'RE DELICIOUS."
 	icon_state = "braincakeslice"
 	filling_color = "#FF69B4"
-	list_reagents = list("nutriment" = 4, "mannitol" = 2, "vitamin" = 1)
+	list_reagents = list("nutriment" = 4, "mannitol" = 2, "vitamin" = 1, "protein" = 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/store/cake/cheese
 	name = "cheese cake"
@@ -67,7 +67,7 @@
 	icon_state = "cheesecake"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/cakeslice/cheese
 	slices_num = 5
-	bonus_reagents = list("vitamin" = 10)
+	bonus_reagents = list("vitamin" = 10, "protein" = 5)
 
 
 /obj/item/weapon/reagent_containers/food/snacks/cakeslice/cheese

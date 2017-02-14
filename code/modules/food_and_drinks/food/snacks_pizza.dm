@@ -31,7 +31,7 @@
 	icon_state = "meatpizza"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/pizzaslice/meat
 	bonus_reagents = list("nutriment" = 5, "vitamin" = 8)
-	list_reagents = list("nutriment" = 30, "tomatojuice" = 6, "vitamin" = 8)
+	list_reagents = list("nutriment" = 30, "tomatojuice" = 6, "vitamin" = 8, "protein" = 25)
 
 /obj/item/weapon/reagent_containers/food/snacks/pizzaslice/meat
 	name = "meatpizza slice"
@@ -73,7 +73,7 @@
 	icon_state = "donkpocketpizza"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/pizzaslice/donkpocket
 	bonus_reagents = list("nutriment" = 5, "vitamin" = 5)
-	list_reagents = list("nutriment" = 25, "tomatojuice" = 6, "omnizine" = 10, "vitamin" = 5)
+	list_reagents = list("nutriment" = 25, "tomatojuice" = 6, "omnizine" = 10, "vitamin" = 5, "protein" = 10)
 
 /obj/item/weapon/reagent_containers/food/snacks/pizzaslice/donkpocket
 	name = "donkpocket pizza slice"
@@ -100,7 +100,7 @@
 	desc = "You can really smell the sassiness."
 	icon_state = "sassysagepizza"
 	slice_path = /obj/item/weapon/reagent_containers/food/snacks/pizzaslice/sassysage
-	bonus_reagents = list("nutriment" = 6, "vitamin" = 6)
+	bonus_reagents = list("nutriment" = 6, "vitamin" = 6, "protein" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/pizzaslice/sassysage
 	name = "sassysage pizza slice"

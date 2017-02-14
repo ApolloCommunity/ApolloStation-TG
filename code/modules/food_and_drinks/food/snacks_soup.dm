@@ -28,7 +28,7 @@
 	name = "meatball soup"
 	desc = "You've got balls kid, BALLS!"
 	icon_state = "meatballsoup"
-	bonus_reagents = list("nutriment" = 1, "vitamin" = 5)
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 5, "protein" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/slime
 	name = "slime soup"
@@ -42,7 +42,7 @@
 	desc = "Smells like copper."
 	icon_state = "tomatosoup"
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 6)
-	list_reagents = list("nutriment" = 2, "blood" = 10, "water" = 5, "vitamin" = 4)
+	list_reagents = list("nutriment" = 2, "blood" = 10, "water" = 5, "vitamin" = 4, "protein" = 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/wingfangchu
 	name = "wing fang chu"
@@ -103,7 +103,7 @@
 	desc = "A delicious soup with dumplings and hunks of monkey meat simmered to perfection, in a broth that tastes faintly of bananas."
 	icon_state = "monkeysdelight"
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 5)
-	list_reagents = list("nutriment" = 10, "banana" = 5, "vitamin" = 5)
+	list_reagents = list("nutriment" = 10, "banana" = 5, "vitamin" = 5, "protein" = 7)
 
 /obj/item/weapon/reagent_containers/food/snacks/soup/tomato
 	name = "tomato soup"

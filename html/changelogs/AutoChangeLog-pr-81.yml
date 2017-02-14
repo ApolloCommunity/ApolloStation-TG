@@ -1,0 +1,9 @@
+author: "Cakey"
+delete-after: True
+changes: 
+  - rscadd: "Added Artemis minimap
+mapping: Added IAA fax machine
+mapping: General bug fixing"
+  - tweak: "Added emergency maint access to radiation storm event"
+  - bugfix: "Fixed emergency maint access"
+  - bugfix: "Fixed chef loadout"

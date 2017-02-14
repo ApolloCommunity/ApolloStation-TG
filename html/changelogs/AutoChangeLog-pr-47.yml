@@ -1,0 +1,4 @@
+author: "Atebite"
+delete-after: True
+changes: 
+  - tweak: "Do a .dme trick which should make merging from /tg/ easier and separate our code from theirs more clearly"

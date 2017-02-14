@@ -73,7 +73,7 @@
 #define NETWORK_ENGINEERING "Engineering"
 #define NETWORK_ENGINEERING_OUTPOST "Engineering Outpost"
 #define NETWORK_ERT "ZeEmergencyResponseTeam"
-#define NETWORK_APOLLO "Apollo"
+#define NETWORK_artemis "artemis"
 #define NETWORK_EXPEDITION "Expedition"
 #define NETWORK_MEDICAL "Medical"
 #define NETWORK_MAINTENANCE "Maintenance Deck"

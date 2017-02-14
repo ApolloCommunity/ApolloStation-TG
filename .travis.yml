@@ -7,7 +7,7 @@ env:
     - BYOND_MINOR="1346"
     - NODE_VERSION="4"
     - BUILD_TOOLS=false
-    - DME_NAME="apollo.dme"
+    - DME_NAME="artemis.dme"
     - DM_MAPFILE=""
     matrix:
     - BUILD_TOOLS=true

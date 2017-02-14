@@ -61,7 +61,7 @@
 	name = "meat-pie"
 	icon_state = "meatpie"
 	desc = "An old barber recipe, very delicious!"
-	bonus_reagents = list("nutriment" = 1, "vitamin" = 5)
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 5, "protein" = 2)
 
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/tofupie
@@ -100,7 +100,7 @@
 	icon_state = "xenomeatpie"
 	desc = "A delicious meatpie. Probably heretical."
 	trash = /obj/item/trash/plate
-	bonus_reagents = list("nutriment" = 1, "vitamin" = 5)
+	bonus_reagents = list("nutriment" = 1, "vitamin" = 5, "protein" = 2)
 
 
 /obj/item/weapon/reagent_containers/food/snacks/pie/applepie

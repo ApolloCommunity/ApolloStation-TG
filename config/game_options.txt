@@ -394,9 +394,9 @@ JOIN_WITH_MUTANT_RACE
 ROUNDSTART_RACES human
 
 ## Races that are strictly worse than humans that could probably be turned on without balance concerns
-ROUNDSTART_RACES lizard
+#ROUNDSTART_RACES lizard
 #ROUNDSTART_RACES fly
-ROUNDSTART_RACES plasmaman
+#ROUNDSTART_RACES plasmaman
 #ROUNDSTART_RACES shadow
 #ROUNDSTART_RACES shadowling
 
@@ -412,6 +412,10 @@ ROUNDSTART_RACES plasmaman
 #ROUNDSTART_RACES abductor
 ROUNDSTART_RACES synth
 ROUNDSTART_RACES skrell
+ROUNDSTART_RACES gravadapted
+ROUNDSTART_RACES spaceadapted
+ROUNDSTART_RACES vatgrown
+ROUNDSTART_RACES android
 
 ## Races that are straight upgrades. If these are on expect powergamers to always pick them
 #ROUNDSTART_RACES skeleton

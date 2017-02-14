@@ -1,0 +1,6 @@
+author: "rjtwins"
+delete-after: True
+changes: 
+  - tweak: "Fixes some final bugs with the char menu as wel as making it faster."
+  - bugfix: "Getting a random char on icon regeneration (every time something is changed)."
+  - wip: "Optimizing menu speed."

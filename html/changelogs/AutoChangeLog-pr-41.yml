@@ -1,0 +1,8 @@
+author: "Supermatter ++ pr"
+delete-after: True
+changes: 
+  - rscadd: "Phoron Desub tgui."
+  - rscadd: "Icons for sm safe gloves."
+  - rscadd: "Icons for sm shards."
+  - rscadd: "Inflatable walls."
+  - imageadd: "Icons for sm safe gloves, sm shards and inflatable walls"

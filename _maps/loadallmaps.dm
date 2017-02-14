@@ -31,7 +31,7 @@
 	#undef MAP_OVERRIDE_FILES
 #endif
 
-#include "apollostation.dm"
+#include "artemisstation.dm"
 #ifdef MAP_OVERRIDE_FILES
 	#undef MAP_OVERRIDE_FILES
 #endif

@@ -9,9 +9,13 @@ var/datum/subsystem/server_maint/SSserver
 	NEW_SS_GLOBAL(SSserver)
 
 /datum/subsystem/server_maint/Initialize(timeofday)
+	warning("world.visibility [world.visibility]")
+	warning("config.hub [config.hub]")
+	/*
 	if (config.hub)
 		world.visibility = 1
 	..()
+	*/
 
 /datum/subsystem/server_maint/fire()
 	//handle kicking inactive players

@@ -1,0 +1,2 @@
+/datum/game_mode/traitor
+	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Internal Affairs Agent","Head of Personnel","Chief Engineer","Chief Medical Officer","Research Director","Sol Government Agent")

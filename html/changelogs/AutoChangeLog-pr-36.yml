@@ -1,0 +1,10 @@
+author: "Supermatter port"
+delete-after: True
+changes: 
+  - rscadd: "Phoron desub"
+  - rscadd: "Arc Emitter"
+  - rscadd: "Canister auto close on eject."
+  - tweak: "Supermatter balance tweaks."
+  - wip: "Arc emitters"
+  - soundadd: "Added sounds for arc emitters and phoron desub."
+  - imageadd: "Added icons for phoron desub, arc emitters and several side objects."

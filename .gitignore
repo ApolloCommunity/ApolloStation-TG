@@ -1,5 +1,8 @@
 ###Files and folders specified here will never be tracked.
 
+#Ignore stuff in the config folder
+/config/**/*
+
 #Ignore everything in datafolder and subdirectories
 /data/**/*
 
@@ -163,7 +166,8 @@ $RECYCLE.BIN/
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 ._*
@@ -184,3 +188,6 @@ Temporary Items
 .apdisk
 
 *.before
+
+# Atom build options
+.atom-build.json

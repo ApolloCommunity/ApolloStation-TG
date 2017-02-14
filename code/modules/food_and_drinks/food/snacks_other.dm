@@ -134,7 +134,7 @@
 	desc = "The precursor to Pigs in a Blanket."
 	icon_state = "eggwrap"
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 3)
-	list_reagents = list("nutriment" = 5)
+	list_reagents = list("nutriment" = 5, "protein" = 3)
 	filling_color = "#F0E68C"
 
 /obj/item/weapon/reagent_containers/food/snacks/beans
@@ -149,7 +149,7 @@
 	name = "spider eggs"
 	desc = "A cluster of juicy spider eggs. A great side dish for when you care not for your health."
 	icon_state = "spidereggs"
-	list_reagents = list("nutriment" = 2, "toxin" = 2)
+	list_reagents = list("nutriment" = 2, "toxin" = 2, "protein" = 2)
 	filling_color = "#008000"
 
 /obj/item/weapon/reagent_containers/food/snacks/chococoin
@@ -215,7 +215,7 @@
 	desc = "The best burrito for meat lovers."
 	icon_state = "carneburrito"
 	bonus_reagents = list("nutriment" = 2, "vitamin" = 1)
-	list_reagents = list("nutriment" = 5, "vitamin" = 1)
+	list_reagents = list("nutriment" = 5, "vitamin" = 1, "protein" = 5)
 	filling_color = "#A0522D"
 
 /obj/item/weapon/reagent_containers/food/snacks/fuegoburrito
@@ -256,7 +256,7 @@
 	desc = "The best icecream in space."
 	icon_state = "spacefreezy"
 	bonus_reagents = list("nutriment" = 2, "vitamin" = 2)
-	list_reagents = list("nutriment" = 6, "bluecherryjelly" = 5, "vitamin" = 4)
+	list_reagents = list("nutriment" = 6, "bluecherryjelly" = 5)
 	filling_color = "#87CEFA"
 
 /obj/item/weapon/reagent_containers/food/snacks/sundae

@@ -1,0 +1,5 @@
+author: "DreadedReborn"
+delete-after: True
+changes: 
+  - rscadd: "New virology dispensers. Synaptizine, Unstable Mutagen, Radium and Liquid Phoron"
+  - imageadd: "Virology dispensers come with some sprites, provided by NijiShadow."

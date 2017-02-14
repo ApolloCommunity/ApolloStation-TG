@@ -1,0 +1,9 @@
+author: "Cakey"
+delete-after: True
+changes: 
+  - rscadd: "Added camera network"
+  - rscadd: "Added airlock controllers"
+  - rscadd: "Added virology dispensers"
+  - rscadd: "Added arc emitters"
+  - bugfix: "fixed senior engineers spawning with sci equipment"
+  - wip: "added phoron desublimation"

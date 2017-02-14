@@ -254,7 +254,6 @@
 	if(remaining_mats)
 		for(var/M=1 to remaining_mats)
 			new stack_type(get_turf(loc))
-	user.unEquip(src,1) //Even NODROP chairs are destroyed.
 	qdel(src)
 
 
@@ -318,21 +317,3 @@
 	desc = "You sit in this. Either by will or force. Looks REALLY uncomfortable."
 	icon_state = "chairold"
 	item_chair = null
-
-/obj/structure/chair/shuttle
-	name = "shuttle chair"
-	desc = "It looks uncomfortable."
-	icon_state = "chair3"
-	var/image/armrest = null
-
-/obj/structure/chair/shuttle/New()
-	armrest = image("icons/obj/furniture.dmi", "chair3_overlay")
-	armrest.layer = MOB_LAYER + 0.1
-
-	return ..()
-
-/obj/structure/chair/shuttle/post_buckle_mob()
-	if(has_buckled_mobs())
-		overlays += armrest
-	else
-		overlays -= armrest

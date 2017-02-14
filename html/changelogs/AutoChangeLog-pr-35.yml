@@ -1,0 +1,8 @@
+author: "Rjtwins"
+delete-after: True
+changes: 
+  - rscadd: "Supermatter main crystal"
+  - bugfix: "fixed a few things"
+  - wip: "Supermatter side stuff (resonanse chaimber ect.)"
+  - imageadd: "Added apollo Supermatter icon."
+  - experiment: "Very experimental supermatter"

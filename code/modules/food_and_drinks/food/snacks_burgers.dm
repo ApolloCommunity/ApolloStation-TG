@@ -4,7 +4,7 @@
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "hburger"
 	bitesize = 3
-	list_reagents = list("nutriment" = 6, "vitamin" = 1)
+	list_reagents = list("nutriment" = 6, "vitamin" = 1, "protein" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/plain
 	name = "burger"
@@ -46,7 +46,7 @@
 	name = "fillet -o- carp sandwich"
 	desc = "Almost like a carp is yelling somewhere... Give me back that fillet -o- carp, give me that carp."
 	icon_state = "fishburger"
-	bonus_reagents = list("nutriment" = 2, "vitamin" = 3)
+	bonus_reagents = list("nutriment" = 2, "vitamin" = 3, "protein" = 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/tofu
 	name = "tofu burger"
@@ -98,7 +98,7 @@
 	desc = "A strange looking burger. It looks almost sentient."
 	icon_state = "brainburger"
 	bonus_reagents = list("nutriment" = 6, "mannitol" = 6, "vitamin" = 5)
-	list_reagents = list("nutriment" = 6, "mannitol" = 5, "vitamin" = 1)
+	list_reagents = list("nutriment" = 6, "mannitol" = 5, "vitamin" = 1, "protein" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/ghost
 	name = "ghost burger"
@@ -159,7 +159,7 @@
 	desc = "Forget the Big Mac. THIS is the future!"
 	icon_state = "bigbiteburger"
 	bonus_reagents = list("vitamin" = 6)
-	list_reagents = list("nutriment" = 10, "vitamin" = 2)
+	list_reagents = list("nutriment" = 10, "vitamin" = 2, "protein" = 7)
 	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/jelly
@@ -180,7 +180,7 @@
 	desc = "This is a mountain of a burger. FOOD!"
 	icon_state = "superbiteburger"
 	bonus_reagents = list("vitamin" = 10)
-	list_reagents = list("nutriment" = 40, "vitamin" = 5)
+	list_reagents = list("nutriment" = 40, "vitamin" = 5, "protein" = 20)
 	w_class = WEIGHT_CLASS_NORMAL
 	bitesize = 7
 	volume = 100
@@ -190,7 +190,7 @@
 	desc = "HOT! HOT!"
 	icon_state = "fivealarmburger"
 	bonus_reagents = list("nutriment" = 2, "vitamin" = 5)
-	list_reagents = list("nutriment" = 6, "capsaicin" = 5, "condensedcapsaicin" = 5, "vitamin" = 1)
+	list_reagents = list("nutriment" = 6, "capsaicin" = 5, "condensedcapsaicin" = 5, "vitamin" = 1, "protein" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/rat
 	name = "rat burger"

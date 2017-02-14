@@ -1,0 +1,10 @@
+author: "Cakey"
+delete-after: True
+changes: 
+  - rscadd: "Added emote sounds for scream, laugh, cough and gasp"
+  - rscadd: "Added sounds for shutters, zippos and flashlights
+mapping: Added no-smoking signs to medical
+mapping: Added phoron desublimation"
+  - tweak: "Changes lobby music loadout"
+  - imageadd: "Added custom title image"
+  - bugfix: "Fixed rad collector tank sprites"

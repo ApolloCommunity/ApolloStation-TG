@@ -20,10 +20,11 @@
 
 
 /obj/machinery/door/poddoor/shutters/open(ignorepower = 0)
+	playsound( src.loc, 'sound/machines/shutter_open.ogg', 50, 0)
 	..()
 	layer = CLOSED_DOOR_LAYER
 
-
 /obj/machinery/door/poddoor/shutters/close(ignorepower = 0)
+	playsound(src, 'sound/machines/shutter_close.ogg', 50, 0)
 	..()
 	layer = CLOSED_DOOR_LAYER

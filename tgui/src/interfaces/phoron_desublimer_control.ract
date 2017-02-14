@@ -1,0 +1,133 @@
+<!-- 
+Title: Phoron Desublimation Control
+Used In File(s): 
+-->
+<ui-display title='Phoron Desublimation Control'>
+	<ui-button action='PRG_switchm' icon='home' params='{"target" : "vessel"}' state='{{data.mselection == 1 ? "selected" : null}}'>Formation Vessel</ui-button>
+	<ui-button action='PRG_switchm' icon='home' params='{"target" : "furnance"}' state='{{data.mselection == 2 ? "selected" : null}}'>Neutron Furnace</ui-button>
+	<ui-button action='run_scan' icon='home' params='{"target" : "scan"}' state='{{data.mselection == 3 ? "disabled" : null}}'>Scan for Machines</ui-button>
+	
+	{{#if data.mselection == 1}}
+		{{#if data.vessel}}
+			<ui-display title='Formation Vessel'>
+				<div class="item">
+					<div class="itemLabel">
+						{{#if data.shard}}
+						Shard Loaded
+						{{else}}
+						No Shard Loaded
+						{{/if}}
+					</div>
+					<div class="itemContent">
+						<ui-button action='vessel_eject_shard' icon='eject' state ='{{data.shard ? null : disabled}}'>Eject Shard</ui-button>
+					</div>
+					<div class="itemLabel">
+						Shard Size:
+					</div>
+					<div class="itemContent">
+						<ui-bar min='{{data.shard_size}}' max='{{data.max_shard_size}}'
+						value='{{data.shard_size}}'>{{Math.round(data.shard_size)}} %</ui-bar>
+					</div>
+				</div>
+				<div class="item">
+					<div class="itemLabel">
+						{{#if data.tank}}
+						Tank Loaded
+						{{else}}
+						No Tank Loaded
+						{{/if}}
+					</div>
+					<div class="itemContent">
+						<ui-button action='vessel_eject_tank' icon='eject' state ='{{data.tank ? null : disabled}}'>Eject Tank</ui-button>
+					</div>
+					<div class="itemLabel">
+						Tank Pressure:
+					</div>
+					<div class="itemContent">
+						<ui-bar min='{{data.tank_pressure}}' max='1013' value='{{data.tank_pressure}}'>{{Math.round(data.tank_pressure)}} KPa</ui-bar>
+					</div>
+				</div>
+				<br>
+				<div class="item">
+					<div class="itemLabel">
+						Vessel Air Contents
+					</div>
+					<div class="itemContent">
+						<ui-button action='vessel_fill' icon='eject' state ='{{data.tank ? null : disabled}}'>Fill Vessel</ui-button>
+						<ui-button action='vessel_feed' icon='eject' state ='{{data.vessel_pressure ? null : disabled}}'>Expose Shard</ui-button>
+					</div>
+					<div class="itemLabel">
+						Vessel Pressure:
+					</div>
+					<div class="itemContent">
+						<ui-bar min='{{data.vessel_pressure}}' max='1013' value='{{data.vessel_pressure}}'>{{Math.round(data.vessel_pressure)}} KPa</ui-bar>
+					</div>
+				</div>
+			</ui-display>
+		{{/if}}
+	{{elseif data.mselection == 2}}
+		{{#if data.furnace}}
+			<ui-display title='Formation Vessel'>
+				<div class="item">
+					<div class="itemLabel">
+						{{#if data.shard}}
+						Shard Loaded
+						{{else}}
+						No Shard Loaded
+						{{/if}}
+					</div>
+					<div class="itemContent">
+						<ui-button action='furnace_eject_shard' icon='eject' state ='{{data.shard ? null : disabled}}'>Eject Shard</ui-button>
+						<ui-button action='furnace_activate' icon='eject' state ='{{data.shard ? null : disabled}}'>Transmute Shard</ui-button>
+					</div>
+					<div class="itemLabel">
+						Shard Size:
+					</div>
+					<div class="itemContent">
+						<ui-bar min='{{data.shard_size}}' max='{{data.max_shard_size}}' value='{{data.shard_size}}'>{{Math.round(data.shard_size)}} %</ui-bar>
+					</div>
+				</div>
+				<br>
+				<div class="item">
+					<div class="itemLabel">
+						Neutron Flow: 
+					</div>
+					<div class="itemContent">
+						<ui-bar min='{{data.neutron_flow}}' max='{{data.max_neutron_flow}}' value='{{data.neutron_flow}}'>{{data.neutron_flow}} mSv</ui-bar>
+					</div>
+					<div class="itemContent">
+						<div style="clear: both; padding-top: 4px;">
+							<ui-button action='neutron_adj' params='{"neutron_adj" : "-100"}' state ='{{(data.neutron_flow > data.min_neutron_flow ) ? null : disabled}}'>-</ui-button>
+							<ui-button action='neutron_adj' params='{"neutron_adj" : "-10"}' state ='{{(data.neutron_flow > data.min_neutron_flow ) ? null : disabled}}'>-</ui-button>
+							<ui-button action='neutron_adj' params='{"neutron_adj" : "-10"}' state ='{{(data.neutron_flow > data.min_neutron_flow ) ? null : disabled}}'>-</ui-button>
+							<ui-button action='neutron_adj' params='{"neutron_adj" : "-0.1"}' state ='{{(data.neutron_flow > data.min_neutron_flow ) ? null : disabled}}'>-</ui-button>
+							<ui-button action='neutron_adj' params='{"neutron_adj" : "0.1"}' state ='{{(data.neutron_flow < data.min_neutron_flow ) ? null : disabled}}'>+</ui-button>
+							<ui-button action='neutron_adj' params='{"neutron_adj" : "1"}' state ='{{(data.neutron_flow < data.min_neutron_flow ) ? null : disabled}}'>+</ui-button>
+							<ui-button action='neutron_adj' params='{"neutron_adj" : "10"}' state ='{{(data.neutron_flow < data.min_neutron_flow ) ? null : disabled}}'>+</ui-button>
+							<ui-button action='neutron_adj' params='{"neutron_adj" : "100"}' state ='{{(data.neutron_flow < data.min_neutron_flow ) ? null : disabled}}'>+</ui-button>
+						</div>
+					</div>
+				</div>
+				<!--
+				<br>
+				<div class="item">
+					<div class="itemLabel">
+						Presets: 
+					</div>
+					<div class="itemContent">
+						<ui-button action='set_preset'>Set Preset</ui-button>
+					</div>
+				</div>
+				<div class="item">
+					<div class="itemContentWide" style="width: 100%;">
+						{{#each data.presets}}
+							<ui-button action='select_preset' params='{"selected_preset" : "value.title"}' state ='{{value.value ? null : disabled}}'>{{value.title}}</ui-button>
+							{{:helper.link(value.title, 'circle-arrow-s', value.commands, value.value ? null : 'disabled' )}}
+						{{/each}}
+					</div>
+				</div>
+				-->
+			</ui-display>
+		{{/if}}
+	{{/if}}
+</ui-display>

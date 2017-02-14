@@ -83,10 +83,10 @@
 	name = "rice and pork"
 	desc = "Well, it looks like pork..."
 	icon_state = "riceporkbowl"
-	bonus_reagents = list("nutriment" = 4, "vitamin" = 4)
+	bonus_reagents = list("nutriment" = 4, "vitamin" = 4, "protein" = 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/salad/eggbowl
 	name = "egg bowl"
 	desc = "A bowl of rice with a fried egg."
 	icon_state = "eggbowl"
-	bonus_reagents = list("nutriment" = 4, "vitamin" = 4)
+	bonus_reagents = list("nutriment" = 4, "vitamin" = 4, "protein" = 5)

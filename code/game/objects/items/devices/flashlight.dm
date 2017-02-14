@@ -28,12 +28,14 @@
 			user.AddLuminosity(brightness_on)
 		else if(isturf(loc))
 			SetLuminosity(brightness_on)
+		playsound( src.loc, 'sound/effects/flashlight_on.ogg', 50, 0)
 	else
 		icon_state = initial(icon_state)
 		if(loc == user)
 			user.AddLuminosity(-brightness_on)
 		else if(isturf(loc))
 			SetLuminosity(0)
+		playsound( src.loc, 'sound/effects/flashlight_off.ogg', 50, 0)
 
 /obj/item/device/flashlight/attack_self(mob/user)
 	on = !on

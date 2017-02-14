@@ -1,0 +1,6 @@
+author: "Removed Clown and Mime, optimized Char creation menu."
+delete-after: True
+changes: 
+  - rscdel: "Clown and Mie"
+  - tweak: "Char creation menu"
+  - wip: "Char creation menu"

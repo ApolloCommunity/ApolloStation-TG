@@ -1,7 +1,7 @@
 /obj/structure/energybarrier
 	name = "energy barrier"
 	desc = "A a repulsive energy field that only allows pods to pass."
-	icon = 'icons/effects/beam.dmi'
+	icon = 'icons/effects/energybarrier.dmi'
 	icon_state = "field"
 	var/id = 1.0
 	density = 0

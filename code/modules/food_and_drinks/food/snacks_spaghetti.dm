@@ -48,7 +48,7 @@
 	icon_state = "meatballspaghetti"
 	trash = /obj/item/trash/plate
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 4)
-	list_reagents = list("nutriment" = 8, "vitamin" = 4)
+	list_reagents = list("nutriment" = 8, "vitamin" = 4, "protein" = 7)
 	filling_color = "#F0E68C"
 
 /obj/item/weapon/reagent_containers/food/snacks/spesslaw
@@ -58,7 +58,7 @@
 	icon_state = "spesslaw"
 	trash = /obj/item/trash/plate
 	bonus_reagents = list("nutriment" = 1, "vitamin" = 6)
-	list_reagents = list("nutriment" = 8, "vitamin" = 6)
+	list_reagents = list("nutriment" = 8, "vitamin" = 6, "protein" = 7)
 	filling_color = "#F0E68C"
 
 /obj/item/weapon/reagent_containers/food/snacks/chowmein
@@ -76,4 +76,4 @@
 	icon = 'icons/obj/food/pizzaspaghetti.dmi'
 	icon_state = "beefnoodle"
 	trash = /obj/item/weapon/reagent_containers/glass/bowl
-	bonus_reagents = list("nutriment" = 5, "vitamin" = 6)
+	bonus_reagents = list("nutriment" = 5, "vitamin" = 6, "protein" = 5)
