@@ -7,7 +7,7 @@
 <hr>
 <ui-display>
 	<ui-section>
-		{{#if data.mode == 21}}
+		{{#if data.messages_mode == 1}}
 			<ui-button icon='arrow-left' action='return_messenger'>Return</ui-button>
 			<ui-button icon='trash' action='clear_messages'>Clear Messages</ui-button>
 		{{else}}
@@ -34,5 +34,21 @@
 
 <h4>Messages</h4>
 <ui-section>
-	{{data.messenger.messages}}
+	{{#if data.messenger.messages_mode == 1}}
+		<ui-display title='{{data.messenger.messages.current_conversation.partner}}'>
+			<ui-section>
+				{{#each data.messenger.messages.current_conversation.messages}}
+					{{sender}}: <i>{{message}}</i>
+					<br>
+				{{/each}}
+			</ui-section>
+		</ui-display>
+	{{else}}
+		<h2>Active Conversations</h2>
+		<hr>
+		{{#each data.messenger.messages}}
+			<ui-button icon='envelope-o' action='view_conversation' params='{"target": "{{partner}}"}'>{{partner}}</ui-button>
+			<br/>
+		{{/each}}
+	{{/if}}
 </ui-section>

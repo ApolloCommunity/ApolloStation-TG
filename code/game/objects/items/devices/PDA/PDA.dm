@@ -22,7 +22,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/owner = null // String name of owner
 	var/default_cartridge = 0 // Access level defined by cartridge
 	var/obj/item/weapon/cartridge/cartridge = null //current cartridge
-	var/mode = 0 //Controls what menu the PDA will display. 0 is hub; the rest are either built in or based on cartridge.
+	var/mode = 0 //Controls what menu the PDA will display
 	var/icon_alert = "pda-r" //Icon to be overlayed for message alerts. Taken from the pda icon file.
 
 	//Secondary variables
@@ -31,8 +31,11 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	var/f_lum = 3 //Luminosity for the flashlight function
 	var/silent = 0 //To beep or not to beep, that is the question
 	var/toff = 0 //If 1, messenger disabled
-	var/tnote = null //Current Texts
+	var/tnote = null //Current Texts - kept around because legacy code
 	var/list/datum/data_pda_msg/message_log = null
+	var/messages_mode = 0 // 0 is conversation list, 1 is message log
+	var/current_conversation_partner = ""
+	var/list/current_conversation = null
 	var/last_text //No text spamming
 	var/last_noise //Also no honk spamming that's bad too
 	var/ttone = "beep" //The ringtone!
@@ -181,7 +184,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	// Messenger data
 	data["messenger"] = list(
 		"silent" = silent,
-		"off" = toff
+		"off" = toff,
+		"messages_mode" = messages_mode
 	)
 
 	data["messenger"]["pdas"] = list()
@@ -201,12 +205,17 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				conversation_partner = M.sender
 			else
 				conversation_partner = M.recipient
-			conversation_partner = 
 
-			if(!data["messenger"]["messages"][conversation_partner])
-				data["messenger"]["messages"][conversation_partner] = list()
+			var/list/info = list(
+				"partner" = conversation_partner,
+				"messages" = list()
+			)
+			info["messages"] += list("sender" = M.sender, "recipient" = M.recipient, "message" = M.message)
 
-			data["messenger"]["messages"][conversation_partner] += list("partner" = conversation_partner, "sender" = M.sender, "recipient" = M.recipient, "message" = M.message)
+			data["messenger"]["messages"] += info
+
+			if(current_conversation_partner == conversation_partner)
+				data["messenger"]["messages"]["current_conversation"] = info
 
 	// todo: data for current convo partner
 	// that'll be used for the conversation template
@@ -400,6 +409,14 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				U.show_message("<span class='notice'>Virus sent!</span>", 1)
 				P.silent = 1
 				P.ttone = "silence"
+
+		if("view_conversation")
+			messages_mode = 1
+			current_conversation_partner = params["partner"]
+
+		if("return_messenger")
+			messages_mode = 0
+
 
 /obj/item/device/pda/attack_self(mob/user)
 	ui_interact(user)
