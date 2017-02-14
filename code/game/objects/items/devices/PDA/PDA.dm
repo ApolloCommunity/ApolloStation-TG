@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-
 //The advanced variants of blue lcd of tomorrow.
 
 var/global/list/obj/item/device/pda/PDAs = list()
