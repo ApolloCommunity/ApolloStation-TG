@@ -1,0 +1,4 @@
+author: "Metichi"
+delete-after: True
+changes: 
+  - rscadd: "Added a positronic brain to the robotics lab that spawns at round start."
